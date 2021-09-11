@@ -4,10 +4,14 @@ import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post as PostClass } from './schemas/post.schema';
+import { MyLogger } from 'src/logger/logger.service';
 
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly logger: MyLogger,
+  ) {}
 
   @Post()
   async create(@Body() createPostDto: CreatePostDto): Promise<PostClass> {
@@ -15,7 +19,8 @@ export class PostsController {
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<PostClass[]> {
+    this.logger.info('will', 'findAll', {});
     return this.postsService.findAll();
   }
 

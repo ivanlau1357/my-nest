@@ -17,8 +17,9 @@ export class PostsService {
     return createdPost.save();
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll(): Promise<PostClass[]> {
+    // put in dao
+    return this.postModel.find().exec();
   }
 
   findOne(id: number) {
